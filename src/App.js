@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Importation des images
 import Riri0 from "./Rimages/Riri0.jpg";
 import Riri1 from "./Rimages/Riri1.jpg";
-import Riri_1 from "./Rimages/Riri1'.webp";
+import Riri_1 from "./Rimages/Riri01.webp";
 import Riri2 from "./Rimages/Riri2.webp";
 import Riri3 from "./Rimages/Riri 33.webp";
 import Riri4 from "./Rimages/Riri 4.jpg";
@@ -64,8 +64,26 @@ class App extends Component {
   //  Méthod de cycle de vie pour démarrer le chronomètre lorsque le composant est monté (mount)
   componentDidMount() {
     this.intervalId = setInterval(() => {
-      this.setState({ chronomètre: this.state.chronomètre + 1 });
+      this.setState((prevState) => ({
+        chronomètre: prevState.chronomètre + 1
+      }));
     }, 1000);
+  }
+
+  //Affichage temps mm:ss
+  formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
+  // Déclencher une alerte après 30s
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.chronomètre < 30 && this.state.chronomètre >= 30) {
+      alert("Bravo, le composant est monté depuis 30 secondes !");
+    }
   }
 
   // Compteur remis à 0 lorsque le composant est démonté(unmounts)
@@ -115,6 +133,13 @@ class App extends Component {
                     src={image}
                     alt={`Rihanna ${index + 1}`}
                     style={{ height: "200px", weight: 100 }}
+                    onError={(e) => {
+                      console.error(
+                        `Erreur de chargement de l’image : ${image}`
+                      );
+                      e.target.src =
+                        "https://via.placeholder.com/200x100?text=Erreur";
+                    }}
                   />
                 </Carousel.Item>
               ))}
@@ -158,46 +183,51 @@ class App extends Component {
                 <strong>Description: </strong> <br />
                 {person.description}
               </Card.Text>
-              <Card.Text
+
+              <div
                 style={{
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: "column",
                   justifyContent: "left",
-                  alignItem: "left"
+                  alignItems: "flex-start",
+                  padding: "10px"
                 }}
               >
                 <strong>Sites Webs:</strong>
+                <ul style={{ paddingLeft: "20px" }}>
+                  <li>
+                    <a
+                      href={person.webSite0}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "maroon", textDecoration: "none" }}
+                    >
+                      www.Rihanna.com
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={person.webSite1}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "violet", textDecoration: "none" }}
+                    >
+                      www.fentybeauty.com
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={person.webSite2}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "violet", textDecoration: "none" }}
+                    >
+                      www.savagex.com
+                    </a>
+                  </li>
+                </ul>
+              </div>
 
-                <span style={{ marginLeft: 10, color: "maroon" }}>
-                  <a
-                    href={person.webSite0}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "maroon", textDecoration: "none" }}
-                  >
-                    www.Rihanna.com
-                    {/*Utilisation de lien ramenant à un site web*/}
-                  </a>
-                  <br />
-                  <a
-                    href={person.webSite1}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "violet", textDecoration: "none" }}
-                  >
-                    www.fentybeauty.com
-                  </a>
-                  <br />
-                  <a
-                    href={person.webSite2}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "violet", textDecoration: "none" }}
-                  >
-                    www.savagex.com
-                  </a>
-                </span>
-              </Card.Text>
               <Card.Text style={{ textAlign: `center` }}>
                 <a
                   href={person.discographie}
@@ -211,7 +241,22 @@ class App extends Component {
             </Card.Body>
             <Card.Footer style={{ textAlign: `center` }}>
               Temps écoulé après montage: <br />{" "}
-              <span style={{ color: "red" }}>{chronomètre}</span> seconds
+              <span style={{ color: "red" }}>
+                {this.formatTime(chronomètre)}
+              </span>{" "}
+              <div>
+                {/*Réinitialiser le compteur*/}
+                <Button
+                  variant="secondary"
+                  onClick={() => this.setState({ chronomètre: 0 })}
+                  style={
+                    ({ marginTop: "7px" },
+                    { backgroundColor: "rgba(251, 87, 87, 0.57)" })
+                  }
+                >
+                  ⏳
+                </Button>
+              </div>
             </Card.Footer>
           </Card>
         )}
