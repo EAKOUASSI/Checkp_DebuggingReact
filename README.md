@@ -12,4 +12,4 @@ Utilisez les outils et fonctionnalités fournis par React Developer Tools pour d
 Documentez le processus de débogage, y compris toutes les étapes prises et les solutions mises en œuvre pour résoudre les problèmes.
 Vérifiez que l’application fonctionne correctement après le débogage et assurez-vous que tous les problèmes identifiés ont été résolus avec succès.
 
-Voir fichier "Débogage" pour les modifications
+Voir fichier "Débogage.md" pour les modifications
