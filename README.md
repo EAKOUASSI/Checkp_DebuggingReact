@@ -11,3 +11,5 @@ Identifiez tous les problèmes tels que des valeurs d’état incorrectes, des a
 Utilisez les outils et fonctionnalités fournis par React Developer Tools pour diagnostiquer et résoudre les problèmes rencontrés.
 Documentez le processus de débogage, y compris toutes les étapes prises et les solutions mises en œuvre pour résoudre les problèmes.
 Vérifiez que l’application fonctionne correctement après le débogage et assurez-vous que tous les problèmes identifiés ont été résolus avec succès.
+
+Voir fichier "Débogage" pour les modifications
